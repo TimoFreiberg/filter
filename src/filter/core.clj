@@ -1,18 +1,10 @@
 (ns filter.core
-  (:gen-class)
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io])
+  (:gen-class))
 
-(defn filter-line
-  "Prints `line` to stdout, if (filter? line)"
-  [filter? line]
-  (when (filter? line)
-    (println line)))
-
-(defn start-filter
-  "Filters stdin line by line with the given filter expression and prints the filtered result. Stops when an end-of-file character is read."
-  [filter?]
-  (doseq [line (line-seq (io/reader *in*))]
-    (filter-line filter? line)))
+(defn filter-lines
+  [pred lines]
+  (filter pred lines))
 
 (defn make-filter
   [filter-expr-str]
@@ -26,7 +18,7 @@
   [args]
   (assert (not (empty? args)))
   (let [filter? (make-filter (first args))]
-    (start-filter filter?)))
+    (run! println (filter filter? (line-seq (io/reader *in*))))))
 
 (defn -main
   [& args]

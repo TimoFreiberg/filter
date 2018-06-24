@@ -1,7 +1,9 @@
 (ns filter.core-test
-  (:require [clojure.test :refer :all]
-            [filter.core :refer :all]))
+  (:require [clojure.test :as t :refer [deftest testing is]]
+            [filter.core :refer [make-filter
+                                 filter-lines]]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest make-filter-test
+  (testing "make-filter"
+    (let [f (make-filter "(constantly true)")]
+      (is (f "whatever")))))
