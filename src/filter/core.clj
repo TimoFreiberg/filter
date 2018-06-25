@@ -9,9 +9,10 @@
 (defn make-filter
   [filter-expr-str]
   (let [raw-expr (read-string filter-expr-str)
-        filter-expr `(fn [~(symbol "it")]
-                       ~raw-expr)]
-    (fn [x] (eval (list filter-expr x)))))
+        filter-expr (partial
+                     (eval `(fn [~(symbol "it")]
+                              ~raw-expr)))]
+    filter-expr))
 
 (defn run-filter
   "Runs the filter program by transforming the args into a filter expression and applying the filter on stdin until an end-of-file character is read."

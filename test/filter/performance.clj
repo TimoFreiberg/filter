@@ -7,7 +7,7 @@
 
 (tufte/add-basic-println-handler! {})
 
-(deftest
+#_(deftest
   filter-nothing
   (testing "performance of filtering nothing in the words file"
     (tufte/profile
